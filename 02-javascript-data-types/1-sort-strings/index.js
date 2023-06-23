@@ -4,6 +4,10 @@
  * @param {string} [param="asc"] param - the sorting type "asc" or "desc"
  * @returns {string[]}
  */
-export function sortStrings(arr, param = 'asc') {
 
+const collator = new Intl.Collator(undefined, { caseFirst: 'upper' });
+
+export function sortStrings(arr, param = 'asc') {
+  const res = [...arr].sort((a, b) => collator.compare(a, b));
+  return param === 'asc' ? res : res.reverse();
 }
