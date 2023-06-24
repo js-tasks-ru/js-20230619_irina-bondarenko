@@ -8,4 +8,3 @@ export const pick = (obj, ...fields) => {
   return fields.reduce((acc, field) => {
     return field in obj ? Object.assign(acc, {[field]: obj[field]}) : acc;
   }, {});
-};
