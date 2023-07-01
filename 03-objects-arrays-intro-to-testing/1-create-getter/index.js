@@ -11,7 +11,7 @@ export function createGetter(path) {
       if (key in reference) {
         reference = reference[key];
       } else {
-        return undefined;
+        return;
       }
     }
     return reference;
