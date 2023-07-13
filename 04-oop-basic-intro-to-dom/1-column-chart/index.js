@@ -1,20 +1,20 @@
 export default class ColumnChart {
   chartHeight = 50;
 
-  constructor(options) {
-    const {data, label, value, link, formatHeading} = options ?? {}; 
-    this.data = data ?? [];
-    this.label = label ?? '';
-    this.value = value ?? 0;
-    this.link = link ?? null;
-    this.formatHeading = formatHeading ?? null;
+  constructor(options = {}) {
+    const { data = [], label = '', value = 0, link = null, formatHeading = null } = options; 
+    this.data = data;
+    this.label = label;
+    this.value = value;
+    this.link = link;
+    this.formatHeading = formatHeading;
 
     this.element = this._build();
   }
 
   update(data) {
     this.data = data;
-    this.element.querySelector('.column-chart__chart').innerHTML = this._renderChart();
+    this.element.querySelector('.column-chart__chart').innerHTML = this._createChartTemplate();
   }
 
   remove() {
@@ -35,11 +35,11 @@ export default class ColumnChart {
     const rootElement = document.createElement("div");
     rootElement.id = this.label;
     rootElement.className = `dashboard__chart_${this.label} ${this._isEmptyData() ? "column-chart_loading" : ""}`
-    rootElement.innerHTML = this._tempate();
+    rootElement.innerHTML = this._createTemplate();
     return rootElement;
   }
 
-  _tempate() {
+  _createTemplate() {
     return `
       <div class="column-chart" style="--chart-height: ${this.chartHeight}">
         <div class="column-chart__title">
@@ -51,13 +51,13 @@ export default class ColumnChart {
                 ${this.formatHeading ? this.formatHeading(this.value) : this.value}
             </div>
             <div data-element="body" class="column-chart__chart">
-                ${this._renderChart()}
+                ${this._createChartTemplate()}
             </div>
         </div>
       </div>`;
   }
 
-  _renderChart() {
+  _createChartTemplate() {
     if (this._isEmptyData()) {
       return ``;
     }
